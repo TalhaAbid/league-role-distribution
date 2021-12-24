@@ -3,7 +3,6 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import {leaguesResponseType, leaguesSummonerType} from '../../types'
 
 process.env.LEAGUE_API_PLATFORM_ID = 'na1'
-process.env.LEAGUE_API_KEY = 'RGAPI-6246bc6e-ecd4-47d4-ad28-f3356d92dae3';
 
 const LeagueJS = require('leaguejs')
 const leagueJs = new LeagueJS(process.env.LEAGUE_API_KEY);

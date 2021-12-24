@@ -21,6 +21,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
+
         {data.map(summoner => <p key={summoner.summonerName}>name:{summoner.summonerName} LP:{summoner.leaguePoints} winrate:{(summoner.losses / summoner.wins) * 100}</p>)} 
       </main>
     </div>
