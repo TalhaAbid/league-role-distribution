@@ -4,7 +4,6 @@ import { leaguesResponseType, leaguesSummonerType } from "../../types";
 const LeagueJS = require("leaguejs");
 
 process.env.LEAGUE_API_PLATFORM_ID = "na1";
-process.env.LEAGUE_API_KEY = "RGAPI-ecfde153-a1f5-4b4f-bcc8-0dc33f4e04ac";
 
 console.log(process.env.LEAGUE_API_KEY);
 const leagueJs = new LeagueJS(process.env.LEAGUE_API_KEY);
