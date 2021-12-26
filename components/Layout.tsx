@@ -26,7 +26,7 @@ const Layout: FunctionComponent<Props> = ({ children }) => {
   console.log(active);
 
   return (
-    <div className="">
+    <div className="border border-yellow-400 w-full h-screen bg-gray-200 grid justify-items-center">
       <Navbar labels={labels} clickHandler={setActive} />
       <main>{children}</main>
     </div>

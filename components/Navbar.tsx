@@ -30,15 +30,17 @@ interface NavbarProps {
 
 const Navbar = ({ clickHandler, labels }: NavbarProps) => {
   return (
-    <ul className="w-100 gap-1 grid grid-cols-3 content-center">
-      {labels.map((label) => (
-        <NavItem
-          key={label.acronym}
-          clickHandler={clickHandler}
-          label={label}
-        />
-      ))}
-    </ul>
+    <div className="w-1/4 h-[50px] border border-blue-600 m-4">
+      <ul className="flex flex-row justify-center">
+        {labels.map((label) => (
+          <NavItem
+            key={label.acronym}
+            clickHandler={clickHandler}
+            label={label}
+          />
+        ))}
+      </ul>
+    </div>
   );
 };
 
