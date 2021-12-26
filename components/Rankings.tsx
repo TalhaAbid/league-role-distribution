@@ -1,6 +1,5 @@
 import React, { useMemo } from "react";
 import { leaguesResponseType } from "../types";
-import { useTable } from "react-table";
 import { Table } from "./Table";
 
 interface RankingsPropTypes {

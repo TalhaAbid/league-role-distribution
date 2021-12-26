@@ -1,5 +1,12 @@
 import React from "react";
-import { TableInstance, useTable } from "react-table";
+import {
+  ColumnGroup,
+  HeaderGroup,
+  Row,
+  TableInstance,
+  useSortBy,
+  useTable,
+} from "react-table";
 
 interface TablePropTypes {
   columns: Array<{ Header: string; accessor: string }>;
@@ -7,10 +14,15 @@ interface TablePropTypes {
 }
 
 const Table = ({ columns, data }: TablePropTypes) => {
-  const tableInstance: TableInstance = useTable({ columns, data });
+  const tableInstance: TableInstance = useTable(
+    { columns: columns, data: data },
+    useSortBy
+  );
+  console.log(tableInstance.headerGroups);
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
+  const firstPage = rows.slice(0, 30);
   return (
     <table
       {...getTableProps()}
@@ -19,17 +31,25 @@ const Table = ({ columns, data }: TablePropTypes) => {
       <thead>
         {
           // loop over the header rows
-          headerGroups.map((headerGroup) => (
+
+          headerGroups.map((headerGroup: HeaderGroup) => (
             // apply the header row props
             <tr {...headerGroup.getHeaderGroupProps()}>
               {
                 // loop over the header in each row
                 headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()}>
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {
                       // Render the header
                       column.render("Header")
                     }
+                    <span>
+                      {column.isSorted
+                        ? column.isSortedDesc
+                          ? " 🔽"
+                          : " 🔼"
+                        : ""}
+                    </span>
                   </th>
                 ))
               }
@@ -40,7 +60,7 @@ const Table = ({ columns, data }: TablePropTypes) => {
       <tbody {...getTableBodyProps()}>
         {
           // loop over table rows
-          rows.map((row) => {
+          firstPage.map((row: Row) => {
             // Prepare Row for display
             prepareRow(row);
             return (
