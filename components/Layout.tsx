@@ -24,7 +24,7 @@ const Layout: FunctionComponent<Props> = ({ setRegion, children }) => {
   ];
 
   return (
-    <div className="border border-yellow-400 w-full h-screen bg-gray-200 grid justify-items-center">
+    <div className="flex flex-col flex-wrap w-screen h-screen justify-center bg-white border border-yellow-400 ">
       <Navbar labels={labels} clickHandler={setRegion} />
       <main>{children}</main>
     </div>

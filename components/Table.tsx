@@ -45,7 +45,7 @@ const Table = ({ columns, data }: TablePropTypes) => {
   } = tableInstance;
 
   return (
-    <>
+    <div>
       <table
         {...getTableProps()}
         className="border border-black table-auto bg-emerald-200"
@@ -80,6 +80,7 @@ const Table = ({ columns, data }: TablePropTypes) => {
             ))
           }
         </thead>
+
         <tbody {...getTableBodyProps()}>
           {
             // loop over table rows
@@ -103,18 +104,26 @@ const Table = ({ columns, data }: TablePropTypes) => {
           }
         </tbody>
       </table>
-      <div className="pagination">
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {"<<"}
+      <div className="p-2">
+        <button
+          className="items-center px-2 py-2 rounded-r-md border border-black-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+          onClick={() => gotoPage(0)}
+          disabled={!canPreviousPage}
+        >
+          First
         </button>{" "}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {"<"}
+        <button
+          className="px-4 py-2 text-white bg-black rounded-md hover:bg-blue-400 hover:text-white"
+          onClick={() => previousPage()}
+          disabled={!canPreviousPage}
+        >
+          Previous
         </button>{" "}
         <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {">"}
+          Next
         </button>{" "}
         <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {">>"}
+          Last
         </button>{" "}
         <span>
           Page{" "}
@@ -145,7 +154,7 @@ const Table = ({ columns, data }: TablePropTypes) => {
           ))}
         </select>
       </div>
-    </>
+    </div>
   );
 };
 
