@@ -7,12 +7,17 @@ import { leaguesResponseType } from "../types";
 import { summonersFetcher } from "./apiHelpers";
 import Rankings from "@components/Rankings";
 
-const Home: NextPage = () => {
+const Home: NextPage = (props) => {
+  console.log(props.region);
   const [challengerData, setChallengerData] = useState<leaguesResponseType>([]);
   //const { data, error } = useSwr("/api/getSummoners", summonersFetcher);
   useEffect(() => {
     axios
-      .get("/api/getSummoners")
+      .get("/api/getSummoners", {
+        params: {
+          region: "na1",
+        },
+      })
       .then((res) => res.data)
       .then((data) => data.entries)
       .then((arr: leaguesResponseType) =>

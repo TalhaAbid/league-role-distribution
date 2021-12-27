@@ -3,12 +3,11 @@ import { FunctionComponent } from "react";
 import { useState } from "react";
 
 interface Props {
+  setRegion: any;
   children: any;
 }
 
-const Layout: FunctionComponent<Props> = ({ children }) => {
-  const [active, setActive] = useState<string>("na1");
-
+const Layout: FunctionComponent<Props> = ({ setRegion, children }) => {
   const labels = [
     {
       regionName: "North America",
@@ -23,11 +22,10 @@ const Layout: FunctionComponent<Props> = ({ children }) => {
       acronym: "euw1",
     },
   ];
-  console.log(active);
 
   return (
     <div className="border border-yellow-400 w-full h-screen bg-gray-200 grid justify-items-center">
-      <Navbar labels={labels} clickHandler={setActive} />
+      <Navbar labels={labels} clickHandler={setRegion} />
       <main>{children}</main>
     </div>
   );
