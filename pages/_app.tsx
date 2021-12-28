@@ -4,13 +4,7 @@ import Layout from "../components/Layout";
 import { useState } from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [region, setRegion] = useState("na1");
-
-  return (
-    <Layout setRegion={setRegion}>
-      <Component region={region} {...pageProps} />
-    </Layout>
-  );
+  return <Component {...pageProps} />;
 }
 
 export default MyApp;

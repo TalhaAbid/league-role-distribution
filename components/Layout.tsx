@@ -24,7 +24,10 @@ const Layout: FunctionComponent<Props> = ({ setRegion, children }) => {
   ];
 
   return (
-    <div className="flex flex-col flex-wrap w-screen h-screen justify-center bg-white border border-yellow-400 ">
+    <div className="flex flex-col flex-wrap w-screen h-screen items-center justify-center bg-violet-200 border border-yellow-400 ">
+      <h1 className="font-mono text-2xl font-medium">
+        League Of Legends Role Distribution
+      </h1>
       <Navbar labels={labels} clickHandler={setRegion} />
       <main>{children}</main>
     </div>

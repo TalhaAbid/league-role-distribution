@@ -5,11 +5,11 @@ const LeagueJS = require("leaguejs");
 
 async function getSummoners() {
   const leagueJs = new LeagueJS(process.env.LEAGUE_API_KEY, {
-    PLATFORM_ID: "na1",
+    PLATFORM_ID: "euw1",
   });
   const response = leagueJs.League.gettingChallengerLeague(
     "RANKED_SOLO_5x5",
-    "na1"
+    "euw1"
   );
   return response;
 }
@@ -22,10 +22,3 @@ export default async function handler(
   let data: leaguesResponseType = await getSummoners();
   res.status(200).json(data);
 }
-
-/*
- * data.sort(
-        (first: leaguesSummonerType, second: leaguesSummonerType) =>
-          second.leaguePoints - first.leaguePoints
-      )
- */

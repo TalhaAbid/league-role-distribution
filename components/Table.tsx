@@ -9,6 +9,7 @@ import {
   usePagination,
   CellProps,
 } from "react-table";
+import { PagniationButton } from "./PagniationButton";
 
 interface TablePropTypes {
   columns: Array<{ Header: string; accessor: string }>;
@@ -25,7 +26,6 @@ const Table = ({ columns, data }: TablePropTypes) => {
     useSortBy,
     usePagination
   );
-  console.log(tableInstance.headerGroups);
 
   const {
     getTableProps,
@@ -45,7 +45,7 @@ const Table = ({ columns, data }: TablePropTypes) => {
   } = tableInstance;
 
   return (
-    <div>
+    <div className="grid items-center justify-items-center">
       <table
         {...getTableProps()}
         className="border border-black table-auto bg-emerald-200"
@@ -94,7 +94,9 @@ const Table = ({ columns, data }: TablePropTypes) => {
                     // loop over cells in row
                     row.cells.map((cell) => {
                       return (
-                        <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                        <td className="tabumlar-nums" {...cell.getCellProps()}>
+                          {cell.render("Cell")}
+                        </td>
                       );
                     })
                   }
@@ -105,26 +107,26 @@ const Table = ({ columns, data }: TablePropTypes) => {
         </tbody>
       </table>
       <div className="p-2">
-        <button
-          className="items-center px-2 py-2 rounded-r-md border border-black-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+        <PagniationButton
           onClick={() => gotoPage(0)}
-          disabled={!canPreviousPage}
-        >
-          First
-        </button>{" "}
-        <button
-          className="px-4 py-2 text-white bg-black rounded-md hover:bg-blue-400 hover:text-white"
+          label={"First Page"}
+          disabled={canPreviousPage}
+        />
+        <PagniationButton
           onClick={() => previousPage()}
-          disabled={!canPreviousPage}
-        >
-          Previous
-        </button>{" "}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-          Next
-        </button>{" "}
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          Last
-        </button>{" "}
+          label={"Previous"}
+          disabled={canPreviousPage}
+        />
+        <PagniationButton
+          onClick={() => nextPage()}
+          label={"Next"}
+          disabled={nextPage}
+        />
+        <PagniationButton
+          onClick={() => gotoPage(pageCount - 1)}
+          label={"Last Page"}
+          disabled={nextPage}
+        />
         <span>
           Page{" "}
           <strong>
