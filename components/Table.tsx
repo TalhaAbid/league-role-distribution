@@ -93,8 +93,14 @@ const Table = ({ columns, data }: TablePropTypes) => {
                   {
                     // loop over cells in row
                     row.cells.map((cell) => {
+                      const vals = cell.getCellProps();
                       return (
-                        <td className="tabumlar-nums" {...cell.getCellProps()}>
+                        <td
+                          key={vals.key}
+                          className="tabumlar-nums"
+                          role={vals.role}
+                          style={vals.style}
+                        >
                           {cell.render("Cell")}
                         </td>
                       );
