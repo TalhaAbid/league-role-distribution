@@ -55,12 +55,18 @@ const Table = ({ columns, data }: TablePropTypes) => {
             // loop over the header rows
             headerGroups.map((headerGroup: HeaderGroup) => (
               // apply the header row props
-              <tr {...headerGroup.getHeaderGroupProps()}>
+              <tr
+                {...headerGroup.getHeaderGroupProps()}
+                key={headerGroup.getHeaderGroupProps().key}
+              >
                 {
                   // loop over the header in each row
                   headerGroup.headers.map((column) => (
                     <th
                       {...column.getHeaderProps(column.getSortByToggleProps())}
+                      key={
+                        column.getHeaderProps(column.getSortByToggleProps()).key
+                      }
                     >
                       {
                         // Render the header
@@ -89,7 +95,7 @@ const Table = ({ columns, data }: TablePropTypes) => {
               prepareRow(row);
               return (
                 // Apply row props
-                <tr {...row.getRowProps()}>
+                <tr {...row.getRowProps()} key={row.getRowProps().key}>
                   {
                     // loop over cells in row
                     row.cells.map((cell) => {
