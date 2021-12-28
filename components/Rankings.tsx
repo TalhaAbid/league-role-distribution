@@ -1,7 +1,8 @@
 import React, { useMemo, useState, useEffect } from "react";
-import { leaguesResponseType } from "../types";
+import { leaguesResponseType, leaguesSummonerType } from "../types";
 import { Table } from "./Table";
 import axios from "axios";
+import Loading from "./Loading";
 
 interface RankingsPropTypes {
   _region: string;
@@ -9,9 +10,10 @@ interface RankingsPropTypes {
 
 interface GenerateTableProps {
   _data: leaguesResponseType;
+  loading: boolean;
 }
 
-const GenerateTable = ({ _data }: GenerateTableProps) => {
+const GenerateTable = ({ _data, loading }: GenerateTableProps) => {
   const data = useMemo(() => _data, [_data]);
   const columns = useMemo(
     () => [
@@ -34,12 +36,13 @@ const GenerateTable = ({ _data }: GenerateTableProps) => {
     ],
     []
   );
-  return <Table data={data} columns={columns} />;
+  return loading ? <Loading /> : <Table data={data} columns={columns} />;
 };
 
 const Rankings = ({ _region }: RankingsPropTypes) => {
   const region = useMemo(() => _region, [_region]);
   const [challengerData, setChallengerData] = useState<leaguesResponseType>([]);
+  const [loading, setLoading] = useState(false);
   let url: string;
   switch (region) {
     case "na1":
@@ -56,26 +59,28 @@ const Rankings = ({ _region }: RankingsPropTypes) => {
       break;
   }
   useEffect(() => {
-    axios({
-      method: "get",
-      url: url,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: {
-        region: "na1",
-      },
-    })
-      .then((res) => res.data)
-      .then((data) => data.entries)
-      .then((arr: leaguesResponseType) =>
-        setChallengerData(
-          arr.sort((first, second) => second.leaguePoints - first.leaguePoints)
-        )
-      )
-      .catch((err) => console.error(err));
+    async function fetchData() {
+      setLoading(true);
+      const response = await axios({
+        method: "get",
+        url: url,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: {
+          region: "na1",
+        },
+      });
+      const data: leaguesResponseType = response.data.entries.sort(
+        (first: leaguesSummonerType, second: leaguesSummonerType) =>
+          second.leaguePoints - first.leaguePoints
+      );
+      setChallengerData(data);
+      setLoading(false);
+    }
+    fetchData();
   }, [url]);
-  return <GenerateTable _data={challengerData} />;
+  return <GenerateTable loading={loading} _data={challengerData} />;
 };
 export default Rankings;
 
