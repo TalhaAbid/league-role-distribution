@@ -13,8 +13,23 @@ interface GenerateTableProps {
   loading: boolean;
 }
 
+async function getSummonerPuuid(summonerId: string) {
+  const res = await axios({
+    method: "post",
+    url: "/api/getSummonerId",
+    headers: {
+      "Content-Type": "applications/json",
+    },
+    data: {
+      summonerId: summonerId,
+    },
+  });
+  return res.data;
+}
+
 const GenerateTable = ({ _data, loading }: GenerateTableProps) => {
   const data = useMemo(() => _data, [_data]);
+
   const columns = useMemo(
     () => [
       {
@@ -32,6 +47,27 @@ const GenerateTable = ({ _data, loading }: GenerateTableProps) => {
       {
         Header: "losses",
         accessor: "losses",
+      },
+      {
+        Header: "summonerId",
+        accessor: "summonerId",
+      },
+      {
+        Header: "Winrate",
+        accessor: (summoner: leaguesSummonerType) =>
+          `${
+            Math.round(
+              ((summoner.wins / (summoner.wins + summoner.losses)) * 100 +
+                Number.EPSILON) *
+                100
+            ) / 100
+          } %`,
+      },
+      {
+        Header: "puuid",
+        accessor: (summoner: leaguesSummonerType) => {
+          return "adf";
+        },
       },
     ],
     []

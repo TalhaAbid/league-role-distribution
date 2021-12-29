@@ -26,6 +26,7 @@ const Table = ({ columns, data }: TablePropTypes) => {
     useSortBy,
     usePagination
   );
+  console.log(data);
 
   const {
     getTableProps,
