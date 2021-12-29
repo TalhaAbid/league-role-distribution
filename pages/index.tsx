@@ -1,10 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import useSwr from "swr";
-import { leaguesResponseType } from "../types";
-import { summonersFetcher } from "./apiHelpers";
+import { useState } from "react";
 import Rankings from "@components/Rankings";
 import Layout from "@components/Layout";
 
