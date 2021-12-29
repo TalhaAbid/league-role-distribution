@@ -15,7 +15,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const body = JSON.parse(req.body);
-  console.log("body", JSON.parse(req.body).summonerId);
-  let data = await getSummonerInfo(body.summonerId, "na1");
-  res.status(200).json(data);
+  console.log("body", JSON.parse(req.body));
+  //let data = await getSummonerInfo(body.summonerId, body.region);
+  res.status(200).json({ region: body.region, id: body.summonerId });
 }

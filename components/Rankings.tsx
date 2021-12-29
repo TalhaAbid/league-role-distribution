@@ -11,10 +11,11 @@ interface RankingsPropTypes {
 interface GenerateTableProps {
   _data: leaguesResponseType;
   loading: boolean;
+  region: string;
 }
 
-async function getSummonerPuuid(summonerId: string) {
-  const res = await axios({
+async function summonerHelper(summonerId: string, region: string) {
+  let res = await axios({
     method: "post",
     url: "/api/getSummonerId",
     headers: {
@@ -22,16 +23,26 @@ async function getSummonerPuuid(summonerId: string) {
     },
     data: {
       summonerId: summonerId,
+      region: region,
     },
   });
-  return res.data;
+  return res;
 }
 
-const GenerateTable = ({ _data, loading }: GenerateTableProps) => {
+function getSummonerPuuid(summonerId: string, region: string) {
+  return summonerHelper(summonerId, region);
+}
+
+const GenerateTable = ({ region, _data, loading }: GenerateTableProps) => {
   const data = useMemo(() => _data, [_data]);
 
-  const columns = useMemo(
-    () => [
+  const columns = useMemo(() => {
+    let count = 1;
+    return [
+      {
+        Header: "Rank",
+        accessor: () => count++,
+      },
       {
         Header: "IGN",
         accessor: "summonerName",
@@ -66,12 +77,13 @@ const GenerateTable = ({ _data, loading }: GenerateTableProps) => {
       {
         Header: "puuid",
         accessor: (summoner: leaguesSummonerType) => {
-          return "adf";
+          let res = getSummonerPuuid(summoner.summonerId, region);
+          console.log("inside table", res);
+          return "a";
         },
       },
-    ],
-    []
-  );
+    ];
+  }, [region]);
   return loading ? <Loading /> : <Table data={data} columns={columns} />;
 };
 
@@ -84,7 +96,7 @@ const Rankings = ({ _region }: RankingsPropTypes) => {
     case "na1":
       url = "/api/getSummoners";
       break;
-    case "lck":
+    case "kr":
       url = "/api/getSummonersKorea";
       break;
     case "euw1":
@@ -116,7 +128,9 @@ const Rankings = ({ _region }: RankingsPropTypes) => {
     }
     fetchData();
   }, [url]);
-  return <GenerateTable loading={loading} _data={challengerData} />;
+  return (
+    <GenerateTable region={region} loading={loading} _data={challengerData} />
+  );
 };
 export default Rankings;
 

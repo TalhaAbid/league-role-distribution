@@ -1,3 +1,4 @@
+import { stringify } from "querystring";
 import React from "react";
 import {
   ColumnGroup,
@@ -9,10 +10,11 @@ import {
   usePagination,
   CellProps,
 } from "react-table";
+import { leaguesSummonerType } from "types";
 import { PagniationButton } from "./PagniationButton";
 
 interface TablePropTypes {
-  columns: Array<{ Header: string; accessor: string }>;
+  columns: any;
   data: any;
 }
 

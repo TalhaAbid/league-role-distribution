@@ -15,7 +15,7 @@ const Layout: FunctionComponent<Props> = ({ setRegion, children }) => {
     },
     {
       regionName: "Korea",
-      acronym: "lck",
+      acronym: "kr",
     },
     {
       regionName: "Europe",
