@@ -66,12 +66,11 @@ const GenerateTable = ({ region, _data, loading }: GenerateTableProps) => {
       {
         Header: "Winrate",
         accessor: (summoner: leaguesSummonerType) =>
-          `${
-            Math.round(
-              ((summoner.wins / (summoner.wins + summoner.losses)) * 100 +
-                Number.EPSILON) *
-                100
-            ) / 100
+          `${Math.round(
+            ((summoner.wins / (summoner.wins + summoner.losses)) * 100 +
+              Number.EPSILON) *
+            100
+          ) / 100
           } %`,
       },
       {
@@ -119,6 +118,7 @@ const Rankings = ({ _region }: RankingsPropTypes) => {
           region: "na1",
         },
       });
+      let puuiDs = [];
       const data: leaguesResponseType = response.data.entries.sort(
         (first: leaguesSummonerType, second: leaguesSummonerType) =>
           second.leaguePoints - first.leaguePoints
